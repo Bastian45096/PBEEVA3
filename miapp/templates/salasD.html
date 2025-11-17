@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas de Salas</title>
+
+    <style>
+        /* Crear la animación de gradientes dinámicos */
+        @keyframes moverFondo {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(45deg, #ffcc00 50%, #00cc00 50%);
+            background-size: 200% 200%;
+            animation: moverFondo 5s ease-in-out infinite; /* El fondo se mueve con un ciclo */
+            font-family: Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        /* Animación de desvanecimiento para el título */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        /* Estilo para el formulario */
+        form {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            width: 80%; /* Ajusta el ancho del formulario */
+            max-width: 800px; /* Límite máximo de ancho */
+            margin: 20px;
+        }
+
+        /* Estilo para cada sala listada */
+        .sala-item {
+            display: flex;
+            justify-content: space-between; /* Separa el texto y el botón */
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo transparente para cada sala */
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        /* Estilo para el botón */
+        button {
+            padding: 10px 20px;
+            font-size: 1em;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:active {
+            background-color: #388e3c;
+        }
+
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+
+    <h2>Aquí estarán las salas disponibles para reservar tu hora</h2>
+
+    <form method="post">
+        {% for s in sala %}
+    <div>
+        <h3>{{ s.NombreS }}</h3>
+        <p>Capacidad: {{ s.CapacidadM }}</p>
+        <p>Disponible: {{ s.Disponibilidad }}</p>
+
+        {% if s.Disponibilidad %}
+            <a href="{% url 'reserva' s.id %}">Reservar</a>
+        
+            
+        {% endif %}
+    </div>
+{% endfor %}
+    </form>
+</body>
+</html>
