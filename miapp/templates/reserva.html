@@ -3,28 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reserva</title>
+    <title>Reservar Sala</title>
 </head>
 <body>
-
-<h1>Sala {{ sala.Nombre }}</h1>
-
-{% if reserva %}
-    <h2>Esta sala ya está reservada</h2>
-    <p><strong>Inicio:</strong> {{ reserva.FechaHI }}</p>
-    <p><strong>Término:</strong> {{ reserva.FechaHT }}</p>
-
-    <a href="{% url 'salasD' %}">Volver</a>
-
-{% else %}
-    <h2>Reservar sala</h2>
+    <h1>Reservar Sala: {{ sala.NombreS }}</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Enviar</button>
+        <button type="submit">Reservar</button>
     </form>
-
-{% endif %}
-
+    <a href="{% url 'salasD' %}">Volver</a>
 </body>
 </html>

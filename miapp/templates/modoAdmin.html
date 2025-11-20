@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador</title>
+</head>
+<body>
+    <h1>Panel de Administrador</h1>
+
+    <!-- Crear Sala -->
+    <h2>Crear Sala</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="crear_sala">
+        <label for="nombre_sala">Nombre de la Sala:</label>
+        <input type="text" name="nombre_sala" id="nombre_sala" required>
+        label for="capacidad">Capacidad Máxima:</label>
+        <input type="number" name="capacidad" id="capacidad" required>
+        <button type="submit">Crear Sala</button>
+    </form>
+
+    <!-- Editar Sala -->
+    <h2>Editar Sala</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="editar_sala">
+        <select name="sala_id">
+            {% for sala in salas %}
+                <option value="{{ sala.id }}">{{ sala.NombreS }}</option>
+            {% endfor %}
+        </select>
+        <label for="nombre_sala_edit">Nuevo Nombre de la Sala:</label>
+        <input type="text" name="nombre_sala_edit" id="nombre_sala_edit" required>
+        <label for="capacidad_edit">Nueva Capacidad Máxima:</label>
+        <input type="number" name="capacidad_edit" id="capacidad_edit" required>
+        <button type="submit">Editar Sala</button>
+    </form>
+
+    <!-- Eliminar Sala -->
+    <h2>Eliminar Sala</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="eliminar_sala">
+        <select name="sala_id">
+            {% for sala in salas %}
+                <option value="{{ sala.id }}">{{ sala.NombreS }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Eliminar Sala</button>
+    </form>
+
+    <!-- Crear Estudiante -->
+    <h2>Crear Estudiante</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="crear_estudiante">
+        <label for="rut">RUT del Estudiante:</label>
+        <input type="text" name="rut" id="rut" required>
+        <label for="nombre">Nombre:</label>
+        <input type="text" name="nombre" id="nombre" required>
+        <label for="apellido">Apellido:</label>
+        <input type="text" name="apellido" id="apellido" required>
+        <button type="submit">Crear Estudiante</button>
+    </form>
+
+    <!-- Editar Estudiante -->
+    <h2>Editar Estudiante</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="editar_estudiante">
+        <select name="estudiante_id">
+            {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.NombreE }} {{ estudiante.ApellidoE }}</option>
+            {% endfor %}
+        </select>
+        <label for="rut_edit">Nuevo RUT del Estudiante:</label>
+        <input type="text" name="rut_edit" id="rut_edit" required>
+        <label for="nombre_edit">Nuevo Nombre:</label>
+        <input type="text" name="nombre_edit" id="nombre_edit" required>
+        <label for="apellido_edit">Nuevo Apellido:</label>
+        <input type="text" name="apellido_edit" id="apellido_edit" required>
+        <button type="submit">Editar Estudiante</button>
+    </form>
+
+    <!-- Eliminar Estudiante -->
+    <h2>Eliminar Estudiante</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="eliminar_estudiante">
+        <select name="estudiante_id">
+            {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.NombreE }} {{ estudiante.ApellidoE }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Eliminar Estudiante</button>
+    </form>
+
+    <!-- Crear Reserva -->
+    <h2>Crear Reserva</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="crear_reserva">
+        <label for="estudiante">Estudiante:</label>
+        <select name="estudiante">
+            {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.NombreE }} {{ estudiante.ApellidoE }}</option>
+            {% endfor %}
+        </select>
+        <label for="sala">Sala:</label>
+        <select name="sala">
+            {% for sala in salas %}
+                <option value="{{ sala.id }}">{{ sala.NombreS }}</option>
+            {% endfor %}
+        </select>
+        <label for="fecha_hi">Fecha y Hora de Inicio:</label>
+        <input type="datetime-local" name="fecha_hi" id="fecha_hi" required>
+        <label for="fecha_ht">Fecha y Hora de Término:</label>
+        <input type="datetime-local" name="fecha_ht" id="fecha_ht" required>
+        <button type="submit">Crear Reserva</button>
+    </form>
+
+    <!-- Editar Reserva -->
+    <h2>Editar Reserva</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="editar_reserva">
+        <select name="reserva_id">
+            {% for reserva in reservas %}
+                <option value="{{ reserva.id }}">{{ reserva.Estudiante.NombreE }} - {{ reserva.Sala.NombreS }} - {{ reserva.FechaHI }}</option>
+            {% endfor %}
+        </select>
+        <label for="estudiante_edit">Nuevo Estudiante:</label>
+        <select name="estudiante_edit">
+            {% for estudiante in estudiantes %}
+                <option value="{{ estudiante.id }}">{{ estudiante.NombreE }} {{ estudiante.ApellidoE }}</option>
+            {% endfor %}
+        </select>
+        <label for="sala_edit">Nueva Sala:</label>
+        <select name="sala_edit">
+            {% for sala in salas %}
+                <option value="{{ sala.id }}">{{ sala.NombreS }}</option>
+            {% endfor %}
+        </select>
+        <label for="fecha_hi_edit">Nueva Fecha y Hora de Inicio:</label>
+        <input type="datetime-local" name="fecha_hi_edit" id="fecha_hi_edit" required>
+        <label for="fecha_ht_edit">Nueva Fecha y Hora de Término:</label>
+        <input type="datetime-local" name="fecha_ht_edit" id="fecha_ht_edit" required>
+        <button type="submit">Editar Reserva</button>
+    </form>
+
+    <!-- Eliminar Reserva -->
+    <h2>Eliminar Reserva</h2>
+    <form method="post" action="{% url 'modoAdmin' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="eliminar_reserva">
+        <select name="reserva_id">
+            {% for reserva in reservas %}
+                <option value="{{ reserva.id }}">{{ reserva.Estudiante.NombreE }} - {{ reserva.Sala.NombreS }} - {{ reserva.FechaHI }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Eliminar Reserva</button>
+    </form>
+</body>
+</html>
